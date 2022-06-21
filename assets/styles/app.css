@@ -1,0 +1,215 @@
+html {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image: linear-gradient(
+    to right top,
+    #d16ba5,
+    #c271b3,
+    #af77bf,
+    #9b7dc7,
+    #8483cb,
+    #6d8ace,
+    #578fcc,
+    #4394c8,
+    #349ac1,
+    #38a0b6,
+    #47a3ab,
+    #5ba6a0
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+header {
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #fafafa;
+  padding: 0 5%;
+  z-index: 10000;
+}
+
+header ul {
+  display: flex;
+  flex-direction: row;
+}
+
+header li {
+  list-style: none;
+  padding: 0.5rem;
+}
+
+header a:-webkit-any-link {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+main {
+  margin: 2rem 0 4rem 0;
+}
+
+.mainContainer {
+  margin: 0 12rem 1rem 12rem;
+  background-color: #e4e3e3;
+  padding: 1rem;
+  border-radius: 0.3rem;
+}
+
+.mainContainer p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.numberOfComments {
+  display: flex;
+  justify-content: flex-end;
+  margin: -1.3rem 0 1rem 0;
+  text-decoration: underline;
+}
+
+.numberOfComments button {
+  border: none;
+  border-radius: 0.2rem;
+  background-image: linear-gradient(
+    to right top,
+    #d16ba5,
+    #9e84ce,
+    #5b98d4,
+    #3aa3bf,
+    #5ba6a0
+  );
+}
+
+.numberOfComments button:hover {
+  cursor: pointer;
+}
+
+.commentAuthorCont {
+  margin: 0 0 0.5rem 0;
+  width: 68%;
+}
+
+.commentAuthorCont input {
+  background-color: #d9d8d8;
+  border-width: 1px;
+  border-radius: 0.2rem;
+  width: 59.8%;
+}
+
+.mainContainer textarea {
+  background-color: #d9d8d8;
+  border-radius: 0.2rem;
+  width: 65%;
+}
+
+.mainContainer .commentBtn:hover,
+.deleteBtn:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right top,
+    #c27aa3,
+    #a08dc5,
+    #759fcf,
+    #5facc4,
+    #70b3ae
+  );
+}
+
+.createTitle {
+  font-size: 2rem;
+  margin: 1rem 0 2rem 0;
+  text-align: center;
+}
+
+.addNewContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.formContainer {
+  width: 60%;
+  margin: 2rem 0 4rem 0;
+  background-color: #d9d8d8;
+  padding: 0.5rem 3rem;
+  border-radius: 0.2rem;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+.inputContainer input,
+select {
+  height: 2rem;
+  margin: 0.5rem 0;
+}
+
+.inputContainer textarea {
+  margin: 0.5rem 0;
+  height: 15rem;
+}
+
+.submitPostBtn {
+  padding: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.submitPostBtn:hover {
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right top,
+    #c27aa3,
+    #a08dc5,
+    #759fcf,
+    #5facc4,
+    #70b3ae
+  );
+}
+
+.aboutContainer {
+  background-color: #d9d8d8;
+  border-radius: 0.2rem;
+  margin: 3rem 10rem;
+}
+
+.aboutTitle {
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 1rem;
+}
+
+.aboutText {
+  text-align: justify;
+  margin: 1rem 2rem 5rem 2rem;
+  padding-bottom: 2rem;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  margin-top: 1rem;
+  bottom: 0;
+  align-items: center;
+  height: 30px;
+  width: 100%;
+  color: gray;
+  text-align: center;
+  background-color: #fafafa;
+  z-index: 10000;
+  margin: 3rem 0 0 -0.5rem;
+}
