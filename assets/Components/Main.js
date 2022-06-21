@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 
 const Main = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [articleList, setArticleList] = useState([]);
+  const [comment, setComment] = useState("");
+  const [author, setAuthor] = useState("");
+  const [articleComments, setArticleComments] = useState([]);
 
   useEffect(() => {
     fetchArticles();
@@ -21,14 +25,26 @@ const Main = () => {
       });
   };
 
-  const makeComment = () => {
+  const makeComment = (id) => {
+    let formData = new FormData();
+    formData.append("author", author);
+    formData.append("comment", comment);
     axios
-      .get("/articleComment/{id}")
+      .post("/blog/comment/" + id, formData)
       .then((response) => {
-        setArticleList(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Comment added to Article",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Some kind of error occured");
+      })
+      .finally(() => {
+        setAuthor(" ");
+        setComment(" ");
       });
   };
 
@@ -66,7 +82,15 @@ const Main = () => {
     });
   };
 
-  const showComments = () => {
+  const showComments = (id) => {
+    setShowCommentModal(!showCommentModal);
+    axios.get("blog/comment/" + id).then((response) => {
+      setArticleComments(response.data.comments);
+      console.log(response);
+    });
+  };
+
+  const closeModal = () => {
     setShowCommentModal(!showCommentModal);
   };
 
@@ -80,37 +104,70 @@ const Main = () => {
             </h1>
             <p>{article.post}</p>
             <div className="numberOfComments">
-              <button onClick={showComments}>2 Comments</button>
+              <button onClick={() => showComments(article.id)}>
+                View Comments
+              </button>
             </div>
             {showCommentModal && (
-              <div>
-                <h1>Comments modal</h1>
+              <div className="commentsModal">
+                <AiFillCloseCircle
+                  className="closeModalBtn"
+                  onClick={closeModal}
+                />
+                {articleComments.map((comment) => {
+                  return (
+                    <div className="comment" key={comment.id}>
+                      <h3>Comment by: {comment.author}</h3>
+                      <p>{comment.comment}</p>
+                    </div>
+                  );
+                })}
               </div>
             )}
-            {!showCommentModal && (
+            <div>
+              <div className="commentAuthorCont">
+                <label htmlFor="author">Comment by:</label>
+                <input
+                  type="text"
+                  name="author"
+                  id="author"
+                  value={author}
+                  required
+                  onChange={(e) => {
+                    setAuthor(e.target.value);
+                  }}
+                />
+              </div>
               <div>
-                <div className="commentAuthorCont">
-                  <label htmlFor="author">Comment by:</label>
-                  <input type="text" name="author" id="author" required />
-                </div>
                 <div>
-                  <textarea id="commentInput" name="commentInput" rows="4" />
+                  <label htmlFor="author">Message:</label>
                 </div>
-                <div>
-                  <input
-                    className="commentBtn"
-                    type="submit"
-                    value="Comment"
-                  ></input>
-                </div>
+                <textarea
+                  id="commentInput"
+                  name="commentInput"
+                  rows="4"
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
                 <button
-                  onClick={() => handleDelete(article.id)}
-                  className="deleteBtn"
+                  className="commentBtn"
+                  type="button"
+                  onClick={() => makeComment(article.id)}
                 >
-                  Delete Article
+                  Post Comment
                 </button>
               </div>
-            )}
+              <button
+                onClick={() => handleDelete(article.id)}
+                className="deleteBtn"
+              >
+                Delete Article
+              </button>
+            </div>
           </div>
         );
       })}

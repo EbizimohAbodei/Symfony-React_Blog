@@ -53,11 +53,11 @@ class CrudController extends AbstractController
         return $this->json("Created new article with an id of: " . $blog->getId());
     } 
 
-    #[Route('/delete/{id}', name: 'delete_article', methods: ['DELETE'])]
+    #[Route('/delete/{id}', name: 'delete_article', methods:['DELETE'])]
     public function delete(int $id, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        $deleteItem =$em->getRepository(BlopPost::class)->find($id);
+        $deleteItem =$em->getRepository(BlogPost::class)->find($id);
 
         if (!$deleteItem){
             return $this->json('No Article found with this id ' . $id, 404);
@@ -69,14 +69,15 @@ class CrudController extends AbstractController
         return $this->json('Deleted a project successfully with id ' . $id);
     }
 
-    #[Route('/comment/{id}', name: 'article_comment', methods:["POST"])]   
+    #[Route('/comment/{id}', name: 'article_comment', methods:['POST'])]   
     public function newComment(int $id, Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        // $blog = $em->getRepository(BlogPost::class)->find($id);
+        $postId = $em->getRepository(BlogPost::class)->find($id);
         $comment = new PostComments();
         $comment->setAuthor($request->request->get("author"));
-        $comment->setComments("comment");
+        $comment->setBlogPost($postId);
+        $comment->setComments($request->request->get("comment"));
         $em->persist($comment);
         $em->flush();
 
@@ -90,29 +91,28 @@ class CrudController extends AbstractController
     } 
 
 
-    #[Route('/blogs/{id}', name: 'blog_show', methods:["GET"])]
-    public function show(int $id, ManagerRegistry $doctrine): Response
+    #[Route('/comment/{id}', name: 'show_comments', methods:['GET'])]
+    public function showComments(int $id, ManagerRegistry $doctrine): Response
     {
-        $blog = $doctrine->getRepository(Blog::class)->find($id);
-        $comments = $blog->getComments();
+        $article = $doctrine->getRepository(BlogPost::class)->find($id);
+        $comments = $article->getComments();
 
-        if (!$blog) {
+        if (!$article) {
             return $this->json("No blog found for id: " . $id, 404);
         }
 
         $allComments = [];
 
         foreach ($comments as $comment) {
-            $oneComment = ["author" => $comment->getAuthor(), "comment" => $comment->getComment(), "commentDate" => $comment->getCommentDate()];
+            $oneComment = ["id" => $comment->getId(), "author" => $comment->getAuthor(), "comment" => $comment->getComments()];
             array_push($allComments, $oneComment);
         }
 
         $data = [
-            'id' => $blog->getId(),
-            'title' => $blog->getTitle(),
-            'author' => $blog->getAuthor(),
-            'blogpost' => $blog->getBlogpost(),
-            'blogDate' => $blog->getBlogDate(),
+            'id' => $article->getId(),
+            'title' => $article->getSubject(),
+            'author' => $article->getAuthor(),
+            'article' => $article->getPost(),
             'comments' => $allComments,
         ];
 

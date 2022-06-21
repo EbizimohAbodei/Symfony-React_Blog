@@ -125,6 +125,49 @@ main {
   );
 }
 
+.commentsModal {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  background-color: #fafafa;
+  height: auto;
+  width: auto;
+  border-radius: 0.5rem;
+  vertical-align: middle;
+}
+
+.commentTitle {
+  text-align: center;
+  text-decoration: dotted;
+}
+
+.comment {
+  padding: 0 0.6rem;
+  background-color: #dae2e4;
+  margin: 0 0.3rem;
+}
+
+.comment h3 {
+  padding-top: 0.2rem;
+}
+
+.comment p {
+  margin-top: -1rem;
+  padding: 0.2rem 0;
+}
+
+.closeModalBtn {
+  position: absolute;
+  right: 0;
+  color: rgb(187, 51, 51);
+}
+
+.closeModalBtn:hover {
+  cursor: pointer;
+}
+
 .createTitle {
   font-size: 2rem;
   margin: 1rem 0 2rem 0;
