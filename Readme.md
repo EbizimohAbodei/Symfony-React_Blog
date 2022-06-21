@@ -16,3 +16,4 @@
 - Symfony
 - React
 - Sweetalert2
+- React Icons
