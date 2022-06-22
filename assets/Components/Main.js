@@ -119,10 +119,18 @@ const Main = () => {
             </div>
             {showCommentModal && (
               <div className="commentsModal">
-                <AiFillCloseCircle
-                  className="closeModalBtn"
-                  onClick={closeModal}
-                />
+                {articleComments.length > 0 ? (
+                  <div>
+                    <AiFillCloseCircle
+                      className="closeModalBtn"
+                      onClick={closeModal}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <h3 className="noComments">No comments on this article</h3>
+                  </div>
+                )}
                 {articleComments.map((comment) => {
                   return (
                     <div className="comment" key={comment.id}>

@@ -143,6 +143,10 @@ main {
   text-decoration: dotted;
 }
 
+.noComments {
+  padding: 0 1rem;
+}
+
 .comment {
   padding: 0 0.6rem;
   background-color: #dae2e4;
