@@ -86,7 +86,6 @@ const Main = () => {
     setShowCommentModal(!showCommentModal);
     axios.get("blog/comment/" + id).then((response) => {
       setArticleComments(response.data.comments);
-      console.log(response);
     });
   };
 
@@ -94,8 +93,14 @@ const Main = () => {
     setShowCommentModal(!showCommentModal);
   };
 
+  const outsideClick = () => {
+    if (showCommentModal) {
+      setShowCommentModal(!showCommentModal);
+    }
+  };
+
   return (
-    <main>
+    <main onClick={outsideClick}>
       {articleList.map((article) => {
         return (
           <div className="mainContainer" key={article.id}>
@@ -104,7 +109,11 @@ const Main = () => {
             </h1>
             <p>{article.post}</p>
             <div className="numberOfComments">
-              <button onClick={() => showComments(article.id)}>
+              <button
+                onClick={(e) => {
+                  showComments(article.id), e.stopPropagation();
+                }}
+              >
                 View Comments
               </button>
             </div>
@@ -147,6 +156,7 @@ const Main = () => {
                   name="commentInput"
                   rows="4"
                   value={comment}
+                  required
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
